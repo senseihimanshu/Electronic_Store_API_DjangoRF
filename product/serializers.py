@@ -24,3 +24,12 @@ class ProductSerializer(serializers.Serializer):
         instance.updated = validated_data.get('updated', instance.updated)
         instance.save()
         return instance
+
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    """Serializer for uploading images to products"""
+
+    class Meta:
+        model = Product
+        fields = ('id', 'image')
+        read_only_field = ('id',)

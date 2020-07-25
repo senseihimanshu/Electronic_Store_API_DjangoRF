@@ -11,25 +11,25 @@ from user import models
 from user import permissions
 
 
-class UserView(APIView):
-    """Test API View"""
-    serializers_class = serializers.UserSerializer
+# class UserView(APIView):
+#     """Test API View"""
+#     serializers_class = serializers.UserSerializer
 
-    def get(self, request, format=None):
-        """Returns a list of API View features"""
-        return Response({'message': 'Working'})
+#     def get(self, request, format=None):
+#         """Returns a list of API View features"""
+#         return Response({'message': 'Working'})
 
-    def post(self, request):
-        serializer = self.serializers_class(data=request.data)
+#     def post(self, request):
+#         serializer = self.serializers_class(data=request.data)
 
-        if serializer.is_valid():
-            message = 'Yippee'
-            return Response({'message': message})
-        else:
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
-            )
+#         if serializer.is_valid():
+#             message = 'Yippee'
+#             return Response({'message': message})
+#         else:
+#             return Response(
+#                 serializer.errors,
+#                 status=status.HTTP_400_BAD_REQUEST
+#             )
 
 
 class UserViewSet(viewsets.ModelViewSet):
