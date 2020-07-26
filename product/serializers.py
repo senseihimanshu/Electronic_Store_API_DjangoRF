@@ -1,35 +1,22 @@
 from rest_framework import serializers
-from .models import Product
 from django.conf import settings
 
+from product import models
 
-class ProductSerializer(serializers.Serializer):
-    user = serializers.RelatedField(settings.AUTH_USER_MODEL,
-                                    on_delete=serializers.CASCADE)
-    name = serializers.CharField(max_length=100)
-    description = serializers.CharField(max_length=500)
-    image = serializers.ImageField(
-        upload_to=upload_product_image, null=True, blank=True)
-    updated = serializers.DateTimeField()
-    timestamp = serializers.DateTimeField()
 
-    def create(self, validated_data):
-        return Product.objects.create(validated_data)
+class ProductSerializer(serializers.ModelSerializer):
+    """Serializes product items"""
 
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name)
-        instance.description = validated_data.get(
-            'description', instance.description)
-        instance.image = validated_data.get('image', instance.image)
-        instance.updated = validated_data.get('updated', instance.updated)
-        instance.save()
-        return instance
+    class Meta:
+        model = models.Product
+        fields = ('id', 'user', 'name', 'description', 'image', 'created_on')
+        extra_kwargs = {'user': {'read_only': True}}
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
     """Serializer for uploading images to products"""
 
     class Meta:
-        model = Product
+        model = models.Product
         fields = ('id', 'image')
         read_only_field = ('id',)
