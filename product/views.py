@@ -41,3 +41,25 @@ class ProductViewSet(viewsets.ModelViewSet):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class MobileViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading, and updating mobile"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.MobileSerializer
+    queryset = models.Mobile.objects.all()
+
+    def perform_create(self, serializer):
+        """Sets the product to the most recently added one"""
+        serializer.save(product=models.Product.objects.latest('id'))
+
+
+class LaptopViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading, and updating laptop"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.LaptopSerializer
+    queryset = models.Laptop.objects.all()
+
+    def perform_create(self, serializer):
+        """Sets the product to the most recently added one"""
+        serializer.save(product=models.Product.objects.latest('id'))
