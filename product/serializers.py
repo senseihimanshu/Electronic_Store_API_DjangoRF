@@ -9,7 +9,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Product
-        fields = ('id', 'user', 'name', 'description', 'image', 'created_on')
+        fields = ('id', 'user', 'name', 'description',
+                  'product_type', 'image', 'created_on')
         extra_kwargs = {'user': {'read_only': True}}
 
 

@@ -3,6 +3,7 @@ import os
 
 from django.db import models
 from django.conf import settings
+from model_utils import Choices
 
 
 def product_image_file_path(instance, filename):
@@ -15,6 +16,8 @@ def product_image_file_path(instance, filename):
 
 class Product(models.Model):
     """Product model"""
+    PRODUCT_TYPE = Choices('mobile', 'laptop')
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -22,6 +25,8 @@ class Product(models.Model):
     name = models.CharField(max_length=52)
     description = models.CharField(max_length=255)
     image = models.ImageField(null=True, upload_to=product_image_file_path)
+    product_type = models.CharField(
+        choices=PRODUCT_TYPE, default='mobile', max_length=20)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
