@@ -30,7 +30,6 @@ class MobileSerializer(serializers.ModelSerializer):
         model = models.Mobile
         fields = ('id', 'product', 'processor', 'ram',
                   'screen_size', 'color')
-        extra_kwargs = {'product': {'read_only': True}}
 
 
 class LaptopSerializer(serializers.ModelSerializer):
@@ -40,4 +39,3 @@ class LaptopSerializer(serializers.ModelSerializer):
         model = models.Laptop
         fields = ('id', 'product', 'processor', 'ram',
                   'hd_capacity')
-        extra_kwargs = {'product': {'read_only': True}}

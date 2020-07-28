@@ -16,8 +16,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ProductSerializer
     queryset = models.Product.objects.all()
     permission_classes = (
-        permissions.UpdateOwnProduct,
-        IsAuthenticated
+        IsAuthenticated,
     )
 
     def perform_create(self, serializer):
@@ -47,19 +46,29 @@ class MobileViewSet(viewsets.ModelViewSet):
     """Handles creating, reading, and updating mobile"""
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.MobileSerializer
-    queryset = models.Mobile.objects.all()
+    permission_classes = (
+        IsAuthenticated,
+    )
 
-    def perform_create(self, serializer):
-        """Sets the product to the most recently added one"""
-        serializer.save(product=models.Product.objects.latest('id'))
+    def get_queryset(self):
+        queryset = models.Mobile.objects.all()
+        product = self.request.query_params.get('product', None)
+        if product is not None:
+            queryset = queryset.filter(product=product)
+        return queryset
 
 
 class LaptopViewSet(viewsets.ModelViewSet):
     """Handles creating, reading, and updating laptop"""
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.LaptopSerializer
-    queryset = models.Laptop.objects.all()
+    permission_classes = (
+        IsAuthenticated,
+    )
 
-    def perform_create(self, serializer):
-        """Sets the product to the most recently added one"""
-        serializer.save(product=models.Product.objects.latest('id'))
+    def get_queryset(self):
+        queryset = models.Laptop.objects.all()
+        product = self.request.query_params.get('product', None)
+        if product is not None:
+            queryset = queryset.filter(product=product)
+        return queryset

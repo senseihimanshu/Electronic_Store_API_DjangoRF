@@ -5,8 +5,8 @@ from rest_framework.routers import DefaultRouter
 from product import views
 
 router = DefaultRouter()
-router.register('mobile', views.MobileViewSet)
-router.register('laptop', views.LaptopViewSet)
+router.register('mobile', views.MobileViewSet, basename='mobile')
+router.register('laptop', views.LaptopViewSet, basename='laptop')
 router.register('', views.ProductViewSet)
 
 
