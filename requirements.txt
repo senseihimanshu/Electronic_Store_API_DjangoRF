@@ -4,7 +4,7 @@ autopep8==1.5.3
 blinker==1.4
 certifi==2019.11.28
 chardet==3.0.4
-cryptography==2.8
+cryptography==3.2
 cupshelpers==1.0
 dbus-python==1.2.16
 defer==1.0.6
